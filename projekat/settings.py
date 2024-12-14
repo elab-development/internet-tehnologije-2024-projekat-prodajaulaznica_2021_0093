@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'utakmice',
     'karte',
-    'korisnici',
+    'login',
     'projekat',
 ]
 
