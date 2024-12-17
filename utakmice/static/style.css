@@ -1,0 +1,49 @@
+/* Globalni stil */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Naslov */
+h1 {
+    color: #4CAF50;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+}
+
+/* Lista */
+ul {
+    list-style: none; /* Uklanja bullet tačke */
+    padding: 0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Stavke u listi */
+li {
+    background-color: #fff;
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li:hover {
+    background-color: #f1f1f1;
+    border-color: #4CAF50;
+}
+
+/* Stil za tekst */
+li span {
+    font-weight: bold;
+    color: #4CAF50;
+}

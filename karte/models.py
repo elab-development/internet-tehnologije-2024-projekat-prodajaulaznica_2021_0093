@@ -1,6 +1,6 @@
 from django.db import models
 from utakmice.models import Utakmica
-from login.models import Korisnik
+from loginovanje.models import Korisnik
 
 class TipKarte(models.Model):
     naziv = models.CharField(max_length=100)

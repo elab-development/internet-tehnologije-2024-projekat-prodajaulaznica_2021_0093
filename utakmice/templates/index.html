@@ -1,0 +1,16 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kkartizan</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>Kkartizan</h1>
+    <ul>
+        {% for t in tekme %}
+        <li> <span>Partizan VS {{ t.protivnik }}</span> {{t.datumVreme|date:"d.m.Y. H:i" }}<button>Kupi karte</button></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
