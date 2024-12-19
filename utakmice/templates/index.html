@@ -1,3 +1,6 @@
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +11,18 @@
 <body>
     <h1>Kkartizan</h1>
     <ul>
+    <form action="{% url "buypage" %}" method="get">
         {% for t in tekme %}
-        <li> <span>Partizan VS {{ t.protivnik }}</span> {{t.datumVreme|date:"d.m.Y. H:i" }}<button>Kupi karte</button></li>
+        <li>
+            <img src="{{ t.urlSlike }}" alt="Utakmica" width="330" height="180">
+            <div class="match-info">
+                <span>Partizan VS {{ t.protivnik }}</span>
+                <span class="date">{{ t.datumVreme|date:"d.m.Y. H:i" }}</span>
+            </div>
+            <button type="submit">Kupi karte</button>
+        </li>
         {% endfor %}
+    </form>
     </ul>
 </body>
 </html>

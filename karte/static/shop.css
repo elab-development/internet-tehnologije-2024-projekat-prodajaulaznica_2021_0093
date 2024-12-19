@@ -1,0 +1,82 @@
+.left {
+    display: flex; /* Koristi se flexbox za lako poravnanje i razmak */
+    justify-content: space-between; /* Razdvaja span-ove maksimalno */
+    align-items: center;
+    margin: 10px 0; /* Razmak između paragrafa */
+    padding: 10px;
+    border: 1px solid #ddd; /* Dodaje okvir za lepši izgled */
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Stil za span-ove unutar paragraf */
+.left span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Stil za celokupnu formu */
+form {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Stil za labele */
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Stil za polja */
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
+    appearance: none; /* Uklanja native strelice */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 viewBox%3D%220 0 4 5%22%3E%3Cpath fill%3D%22%23ccc%22 d%3D%22M2 0L0 2h4L2 0zM0 3l2 2 2-2H0z%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px 12px;
+}
+
+/* Fokus na polju */
+form select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+/* Dugme za slanje */
+form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover efekat za dugme */
+form button:hover {
+    background-color: #0056b3;
+}

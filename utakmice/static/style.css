@@ -1,49 +1,83 @@
 /* Globalni stil */
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 20px;
-    background-color: #f9f9f9;
+    background: linear-gradient(135deg, #000000, #040e46);
     color: #333;
 }
 
 /* Naslov */
 h1 {
-    color: #4CAF50;
+    color: #bfe9c1;
     text-align: center;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    font-size: 2.5em;
+    border-bottom: 3px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    font-size: 3.5em;
+    font-family: 'Arial Narrow Bold', sans-serif
 }
 
 /* Lista */
 ul {
     list-style: none; /* Uklanja bullet tačke */
     padding: 0;
-    max-width: 600px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
 /* Stavke u listi */
 li {
     background-color: #fff;
-    margin: 10px 0;
-    padding: 15px;
+    margin: 15px 0;
+    padding: 20px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 li:hover {
     background-color: #f1f1f1;
     border-color: #4CAF50;
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Stil za tekst */
-li span {
-    font-weight: bold;
-    color: #4CAF50;
+/* Informacije o utakmici */
+.match-info {
+    flex-grow: 1;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.match-info span {
+    display: block;
+    font-size: 1.5em;
+}
+
+.match-info .date {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Dugme */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
 }

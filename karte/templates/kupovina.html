@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kupovina</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'shop.css' %}">
+</head>
+<body>
+
+    <form action="" method="post">
+        {% for pk in ostalo %}
+        <p class="left">
+            <span>{{pk.tip_karte}}</span>
+            <span>Preostalo: {{pk.preostalo}}</span>
+        </p>
+        {% endfor %}
+        <br>
+        {% csrf_token %}
+        {{forma.as_p}}
+        <button type="submit">Kupi karte</button>
+    </form>
+</body>
+</html>
