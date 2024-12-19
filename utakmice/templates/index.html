@@ -11,7 +11,6 @@
 <body>
     <h1>Kkartizan</h1>
     <ul>
-    <form action="{% url "buypage" %}" method="get">
         {% for t in tekme %}
         <li>
             <img src="{{ t.urlSlike }}" alt="Utakmica" width="330" height="180">
@@ -19,10 +18,12 @@
                 <span>Partizan VS {{ t.protivnik }}</span>
                 <span class="date">{{ t.datumVreme|date:"d.m.Y. H:i" }}</span>
             </div>
-            <button type="submit">Kupi karte</button>
+            <form action="{% url "buypage" %}" method="get">
+                <input type="hidden" name="id" value="{{ t.id }}">
+                <button type="submit">Kupi karte</button>
+            </form>
         </li>
         {% endfor %}
-    </form>
     </ul>
 </body>
 </html>
