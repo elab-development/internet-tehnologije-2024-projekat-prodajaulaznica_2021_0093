@@ -1,3 +1,0 @@
-TO DO:
-Kad se izabere utakmica prikazuju se preostale karte za nju - 'DONE'
-Nakon kupovine karata smanjuje se preostalo
