@@ -10,6 +10,16 @@
 </head>
 <body>
     <h1>Kkartizan</h1>
+    <div class="korisnik"> 
+        {% if request.user.username %}   
+        <h2>Korisnik: {{ request.user.username }}</h2>
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="menibtn"> Logout </button>
+        </form>
+        <h2>Kupljene karte</h2>
+        {% endif %}
+    </div>
     <ul>
         {% for t in tekme %}
         <li>

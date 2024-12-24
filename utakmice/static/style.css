@@ -1,9 +1,37 @@
-/* Globalni stil */
+.menibtn{
+    background: none; 
+    border: none; 
+    color: #007BFF; 
+    cursor: pointer; 
+    text-decoration: underline;
+    font-size: 1.5em;
+}
+
+.korisnik h2:first-child {
+    color: #bfe9c1;
+    font-size: 2em;
+}
+
+.korisnik h2 {
+    margin-left: 20px;
+    color: #007BFF;
+    cursor: pointer;
+}
+
+.korisnik h2:hover {
+    text-decoration: underline;
+}
+
+.korisnik a {
+    text-decoration: none;
+    color: inherit; /* Nasleđuje boju iz stila */
+}
 
 body {
     font-family: 'Arial', sans-serif;
     margin: 20px;
     background: linear-gradient(135deg, #000000, #040e46);
+    background-size: cover;
     color: #333;
 }
 
