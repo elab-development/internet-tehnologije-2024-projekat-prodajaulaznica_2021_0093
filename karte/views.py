@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from karte.form import FormaKupovina, RegisterForm
-from karte.models import PreostaloKarata
+from karte.models import Karte, PreostaloKarata
 from utakmice.models import Utakmica
 
 from django.contrib.auth.models import User
@@ -53,6 +53,13 @@ def kupovinaForma(zahtev):
             if izbor.preostalo >= kolicina:
                 izbor.preostalo -= kolicina
                 izbor.save()
+                for _ in range(kolicina):
+                    Karte.objects.create(
+                        tip_karte=izbor.tip_karte,
+                        kupac=zahtev.user,
+                        cena=3000.00,
+                        utakmica = get_object_or_404(Utakmica, id=zahtev.GET.get('id'))
+                    )
                 return redirect('uspesna_kupovina')
             else:
                 return redirect('greska')
@@ -68,3 +75,8 @@ def uspesna_kupovina(zahtev):
 
 def greska(zahtev):
     return render(zahtev,'greskapage.html')
+
+def kupljene_karte(zahtev):
+    if zahtev.method == "POST":
+        kupljene = Karte.objects.filter(kupac=zahtev.user)
+        return render(zahtev,'kupljenekarte.html',{'kupljene':kupljene})

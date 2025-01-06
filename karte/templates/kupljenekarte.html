@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kupljene karte</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'kupljene.css' %}">
+</head>
+<body>
+    <ul>
+        <h2>Kupljene karte</h2>
+        <h2>Korisnik: {{ request.user.username }}</h2>
+        {% for kk in kupljene %}
+        <li>
+            <span>{{ kk.tip_karte }}</span>
+            <span>{{ kk.utakmica }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

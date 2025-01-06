@@ -6,5 +6,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register_view, name='register'),
     path('uspesna-kupovina',views.uspesna_kupovina, name='uspesna_kupovina'),
-    path('greska', views.greska, name='greska')
+    path('greska', views.greska, name='greska'),
+    path('kupljene', views.kupljene_karte, name='kupljene')
 ]
