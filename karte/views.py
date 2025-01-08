@@ -57,7 +57,7 @@ def kupovinaForma(zahtev):
                     Karte.objects.create(
                         tip_karte=izbor.tip_karte,
                         kupac=zahtev.user,
-                        cena=3000.00,
+                        cena=izbor.cena,
                         utakmica = get_object_or_404(Utakmica, id=zahtev.GET.get('id'))
                     )
                 return redirect('uspesna_kupovina')

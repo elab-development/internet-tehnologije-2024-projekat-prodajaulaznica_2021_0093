@@ -7,6 +7,42 @@
     font-size: 1.5em;
 }
 
+
+.sort-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.sort-buttons a {
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #4CAF50; /* Zelena ivica */
+    border-radius: 8px;
+    background-color: white; /* Belа pozadina */
+    color: #4CAF50; /* Zelena boja teksta */
+    font-weight: bold;
+    font-size: 1em;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.sort-buttons a:hover {
+    background-color: #4CAF50;
+    color: white;
+    transform: translateY(-3px);
+}
+
+
+.sort-buttons a.active {
+    background-color: #4CAF50; /* Zelena pozadina */
+    color: white; /* Bela boja teksta */
+    border-color: #388E3C; /* Tamnija zelena */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Blaga senka */
+}
+
+
 .korisnik h2:first-child {
     color: #bfe9c1;
     font-size: 2em;
@@ -30,19 +66,20 @@
 body {
     font-family: 'Arial', sans-serif;
     margin: 20px;
-    background: linear-gradient(135deg, #000000, #040e46);
+    /* background: linear-gradient(135deg, #000000, #040e46); */
+    background: url(https://sportske-vesti.rs/wp-content/uploads/2023/11/kk-partizan-1.jpg);
     background-size: cover;
     color: #333;
 }
 
 /* Naslov */
 h1 {
-    color: #bfe9c1;
+    color: #ffffff;
     text-align: center;
     border-bottom: 3px solid #ddd;
     padding-bottom: 15px;
     margin-bottom: 30px;
-    font-size: 3.5em;
+    font-size: 4.5em;
     font-family: 'Arial Narrow Bold', sans-serif
 }
 

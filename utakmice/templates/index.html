@@ -10,18 +10,24 @@
 </head>
 <body>
     <h1>Kkartizan</h1>
+    <div class="sort-buttons">
+        <a href="?sort=protivnik" {% if request.GET.sort == "protivnik" %}class="active"{% endif %}>Sortiraj po protivniku</a> |
+        <a href="?sort=datumVreme" {% if request.GET.sort == "datumVreme" %}class="active"{% endif %}>Sortiraj po datumu</a> |
+        <a href="?sort=lokacija" {% if request.GET.sort == "lokacija" %}class="active"{% endif %}>Sortiraj po lokaciji</a>
+    </div>
+    
     <div class="korisnik"> 
         {% if request.user.username %}   
         <h2>Korisnik: {{ request.user.username }}</h2>
 
         <form action="{% url 'logout' %}" method="post" style="display: inline;">
             {% csrf_token %}
-            <button type="submit" class="menibtn"> Logout </button>
+            <button type="submit" class="sort-buttons" style="font-size:1.5em"> Logout </button>
         </form>
 
         <form action="{% url 'kupljene' %}" method="post" style="display: inline;">
             {% csrf_token %}
-            <button type="submit" class="menibtn"> Kupljene karte </button>
+            <button type="submit" class="sort-buttons" style="font-size:1.5em"> Kupljene karte </button>
         </form>
         {% endif %}
     </div>

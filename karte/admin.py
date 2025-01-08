@@ -5,7 +5,7 @@ class TipKarteAdmin(admin.ModelAdmin):
     list_display = ('naziv',)
 
 class PreostaloKarataAdmin(admin.ModelAdmin):
-    list_display = ('utakmica','tip_karte','preostalo')
+    list_display = ('utakmica','tip_karte','cena','preostalo')
 
 # Register your models here.
 admin.site.register(Karte)
