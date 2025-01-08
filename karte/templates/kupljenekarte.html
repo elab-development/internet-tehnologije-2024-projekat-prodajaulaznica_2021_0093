@@ -16,6 +16,9 @@
             <span>{{ kk.tip_karte }}</span>
             <span>{{ kk.utakmica }}</span>
             <span>{{ kk.cena }} RSD</span>
+            <form action="{% url 'export' kk.id %}" method="get" style="display:inline;">
+                <button type="submit">Preuzmi kartu</button>
+            </form>
         </li>
         {% endfor %}
     </ul>

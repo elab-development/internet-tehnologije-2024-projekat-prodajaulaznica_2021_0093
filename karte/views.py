@@ -2,6 +2,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from karte.form import FormaKupovina, RegisterForm
 from karte.models import Karte, PreostaloKarata
 from utakmice.models import Utakmica
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -80,3 +82,19 @@ def kupljene_karte(zahtev):
     if zahtev.method == "POST":
         kupljene = Karte.objects.filter(kupac=zahtev.user)
         return render(zahtev,'kupljenekarte.html',{'kupljene':kupljene})
+    
+def karta_u_pdf(request, karta_id):
+    karta = get_object_or_404(Karte, id=karta_id, kupac=request.user)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="karta_{karta.id}.pdf"'
+    
+    p = canvas.Canvas(response)
+    p.drawString(100, 750, "Karta")
+    p.drawString(100, 730, f"Tip karte: {karta.tip_karte}")
+    p.drawString(100, 710, f"Cena: {karta.cena} RSD")
+    p.drawString(100, 690, f"Kupac: {request.user.username}")
+    p.drawString(100, 670, f"Utakmica: {karta.utakmica}")
+
+    p.save()
+    return response

@@ -7,5 +7,6 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('uspesna-kupovina',views.uspesna_kupovina, name='uspesna_kupovina'),
     path('greska', views.greska, name='greska'),
-    path('kupljene', views.kupljene_karte, name='kupljene')
+    path('kupljene', views.kupljene_karte, name='kupljene'),
+    path('export-pdf/<int:karta_id>/', views.karta_u_pdf, name='export')
 ]
