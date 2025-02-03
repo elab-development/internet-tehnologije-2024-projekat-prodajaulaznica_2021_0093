@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from rest_framework import routers
 from karte import views
+
+router = routers.DefaultRouter()
+router.register(r'karte', views.KarteViewSet, 'karte')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

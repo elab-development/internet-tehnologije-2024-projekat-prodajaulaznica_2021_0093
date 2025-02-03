@@ -1,12 +1,18 @@
 from django.urls import path
 from . import views
+
 urlpatterns = [
+    # Regularne stranice
     path('', views.kupovinaForma, name='buypage'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register_view, name='register'),
-    path('uspesna-kupovina',views.uspesna_kupovina, name='uspesna_kupovina'),
+    path('uspesna-kupovina', views.uspesna_kupovina, name='uspesna_kupovina'),
     path('greska', views.greska, name='greska'),
     path('kupljene', views.kupljene_karte, name='kupljene'),
-    path('export-pdf/<int:karta_id>/', views.karta_u_pdf, name='export')
+    path('export-pdf/<int:karta_id>/', views.karta_u_pdf, name='export'),
+
+    # API rute
+    path('api/kupovina/', views.KupovinaKarteAPIView.as_view(), name='api_kupovina'),
+    path('api/kupljene/', views.KupljeneKarteAPIView.as_view(), name='api_kupljene'),
 ]
