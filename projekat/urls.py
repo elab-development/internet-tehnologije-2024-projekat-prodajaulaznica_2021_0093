@@ -1,32 +1,29 @@
-"""
-URL configuration for projekat project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from rest_framework import routers
-from karte import views
+from karte import views as karte_views
+from utakmice import views as utakmice_views
+from loginovanje import views as login_views
 
+# Router za DRF ViewSet-ove
 router = routers.DefaultRouter()
-router.register(r'karte', views.KarteViewSet, 'karte')
+router.register(r'karte', karte_views.KarteViewSet, 'karte')  # Registrujemo ViewSet za karte
+router.register(r'utakmice', utakmice_views.UtakmicaViewSet, 'utakmice')  # Registrujemo ViewSet za utakmice
 
 urlpatterns = [
+    # Admin panel
     path('admin/', admin.site.urls),
-    path('', include('utakmice.urls')),
-    path('karte/',include('karte.urls')),
-    path('accounts/login/', views.login_view, name='login'),
-    path('accounts/logout/', views.logout_view, name='logout'),
-    path('accounts/register/', views.register_view, name='register'),
+
+    # API endpoint-i
+    path('api/', include(router.urls)),  # Uključujemo sve rute iz routera
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),  # DRF autentifikacija
+
+    # Autentifikacija
+    path('accounts/login/', login_views.login_view, name='login'),  # Prijava korisnika
+    path('accounts/logout/', login_views.logout_view, name='logout'),  # Odjava korisnika
+    path('accounts/register/', login_views.register_view, name='register'),  # Registracija korisnika
+
+    # Aplikacije
+    path('', include('utakmice.urls')),  # Uključujemo sve rute iz aplikacije `utakmice`
+    path('karte/', include('karte.urls')),  # Uključujemo sve rute iz aplikacije `karte`
 ]

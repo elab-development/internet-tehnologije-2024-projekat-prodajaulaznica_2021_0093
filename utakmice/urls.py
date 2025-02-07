@@ -1,23 +1,24 @@
-from django.contrib import admin
-from django.urls import path, include
-from rest_framework import routers
-from utakmice import views
+from django.urls import include, path
+from . import views
+from rest_framework.routers import DefaultRouter
 
-router = routers.DefaultRouter()
+# Router za ViewSet
+router = DefaultRouter()
 router.register(r'utakmice', views.UtakmicaViewSet, 'utakmice')
 
 urlpatterns = [
-
-    path('api/', include(router.urls)),
-
+    # Regularni Django view za početnu stranicu
     path('', views.pocetna, name='home'),
 
-    # URL za listu svih utakmica
+    # API endpoint-i
+    path('api/', include(router.urls)),  # Uključuje sve rute iz ViewSet-a
+
+    # API view za listu svih utakmica
     path('utakmice/', views.utakmice_list, name='utakmice_list'),
-    
-    # URL za kreiranje nove utakmice
+
+    # API view za kreiranje nove utakmice
     path('utakmice/create/', views.utakmica_create, name='utakmica_create'),
-    
-    # URL za prikazivanje detalja utakmice
+
+    # API view za detalje utakmice
     path('utakmice/<int:pk>/', views.utakmica_detail, name='utakmica_detail'),
 ]
