@@ -1,0 +1,144 @@
+.menibtn {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 1.5em;
+}
+
+.sort-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.sort-buttons button {
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #4caf50; /* Zelena ivica */
+    border-radius: 8px;
+    background-color: white; /* Bela pozadina */
+    color: #4caf50; /* Zelena boja teksta */
+    font-weight: bold;
+    font-size: 1em;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.sort-buttons button:hover {
+    background-color: #4caf50;
+    color: white;
+    transform: translateY(-3px);
+}
+
+.sort-buttons button.active {
+    background-color: #4caf50; /* Zelena pozadina */
+    color: white; /* Bela boja teksta */
+    border-color: #388e3c; /* Tamnija zelena */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Blaga senka */
+}
+
+.korisnik h2:first-child {
+    color: #bfe9c1;
+    font-size: 2em;
+}
+
+.korisnik h2 {
+    margin-left: 20px;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.korisnik h2:hover {
+    text-decoration: underline;
+}
+
+.korisnik a {
+    text-decoration: none;
+    color: inherit; /* Nasleđuje boju iz stila */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    background: url(https://sportske-vesti.rs/wp-content/uploads/2023/11/kk-partizan-1.jpg);
+    background-size: cover;
+    color: #333;
+}
+
+/* Naslov */
+h1 {
+    color: #ffffff;
+    text-align: center;
+    border-bottom: 3px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    font-size: 4.5em;
+    font-family: 'Arial Narrow Bold', sans-serif;
+}
+
+/* Lista */
+ul {
+    list-style: none; /* Uklanja bullet tačke */
+    padding: 0;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Stavke u listi */
+li {
+    background-color: #fff;
+    margin: 15px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+li:hover {
+    background-color: #f1f1f1;
+    border-color: #4caf50;
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Informacije o utakmici */
+.match-info {
+    flex-grow: 1;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.match-info span {
+    display: block;
+    font-size: 1.5em;
+}
+
+.match-info .date {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Dugme */
+button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
