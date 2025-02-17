@@ -1,13 +1,26 @@
+from rest_framework import viewsets
 from django.shortcuts import get_object_or_404, redirect, render
-from karte.form import FormaKupovina, RegisterForm
-from karte.models import Karte, PreostaloKarata
-from utakmice.models import Utakmica
-from django.http import HttpResponse
-from reportlab.pdfgen import canvas
-
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
+from .models import TipKarte, Karte, PreostaloKarata
+from .serializers import TipKarteSerializer, KarteSerializer, PreostaloKarataSerializer
+from karte.form import FormaKupovina, RegisterForm
+from utakmice.models import Utakmica
+
+class TipKarteViewSet(viewsets.ModelViewSet):
+    queryset = TipKarte.objects.all()
+    serializer_class = TipKarteSerializer
+
+class KarteViewSet(viewsets.ModelViewSet):
+    queryset = Karte.objects.all()
+    serializer_class = KarteSerializer
+
+class PreostaloKarataViewSet(viewsets.ModelViewSet):
+    queryset = PreostaloKarata.objects.all()
+    serializer_class = PreostaloKarataSerializer
 
 def register_view(request):
     if request.method == "POST":
@@ -21,7 +34,6 @@ def register_view(request):
     else:
         form = RegisterForm()
     return render(request, 'accounts/register.html', {'form':form})
-
 
 def login_view(request):
     error_message = None 
@@ -37,13 +49,11 @@ def login_view(request):
             error_message = "Invalid credentials"  
     return render(request, 'accounts/login.html', {'error': error_message})
 
-    
 def logout_view(request):
     if request.method == "POST":
         logout(request)
         return redirect('home')
 
-# Create your views here.
 @login_required
 def kupovinaForma(zahtev):
     if zahtev.method == 'POST':
@@ -66,7 +76,7 @@ def kupovinaForma(zahtev):
             else:
                 return redirect('greska')
     else:
-        utakmica_id = zahtev.GET.get('id')  # Uzimanje ID-a iz GET parametra
+        utakmica_id = zahtev.GET.get('id')
         utakm = get_object_or_404(Utakmica, id=utakmica_id)
         forma = FormaKupovina()
         ostalo = PreostaloKarata.objects.filter(utakmica=utakm)

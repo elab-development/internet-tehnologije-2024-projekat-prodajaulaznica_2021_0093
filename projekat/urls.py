@@ -13,4 +13,10 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/', include('utakmice.urls')),
+    path('register/', include('register.urls')),
+    path('api/auth/', include('loginovanje.urls')),    
+    path('', include('karte.urls')),  # Ovo uključuje sve rute iz 'karte/urls.py'
+
+
 ]
