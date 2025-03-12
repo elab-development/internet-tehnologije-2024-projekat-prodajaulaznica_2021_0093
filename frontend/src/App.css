@@ -1,11 +1,12 @@
-.menibtn {
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
+.menibtn{
+    background: none; 
+    border: none; 
+    color: #007BFF; 
+    cursor: pointer; 
     text-decoration: underline;
     font-size: 1.5em;
 }
+
 
 .sort-buttons {
     display: flex;
@@ -14,31 +15,33 @@
     gap: 10px;
 }
 
-.sort-buttons button {
+.sort-buttons a {
     text-decoration: none;
     padding: 10px 20px;
-    border: 2px solid #4caf50; /* Zelena ivica */
+    border: 2px solid #4CAF50; /* Zelena ivica */
     border-radius: 8px;
-    background-color: white; /* Bela pozadina */
-    color: #4caf50; /* Zelena boja teksta */
+    background-color: white; /* Belа pozadina */
+    color: #4CAF50; /* Zelena boja teksta */
     font-weight: bold;
     font-size: 1em;
     transition: all 0.3s ease-in-out;
-    cursor: pointer;
 }
 
-.sort-buttons button:hover {
-    background-color: #4caf50;
+
+.sort-buttons a:hover {
+    background-color: #4CAF50;
     color: white;
     transform: translateY(-3px);
 }
 
-.sort-buttons button.active {
-    background-color: #4caf50; /* Zelena pozadina */
+
+.sort-buttons a.active {
+    background-color: #4CAF50; /* Zelena pozadina */
     color: white; /* Bela boja teksta */
-    border-color: #388e3c; /* Tamnija zelena */
+    border-color: #388E3C; /* Tamnija zelena */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Blaga senka */
 }
+
 
 .korisnik h2:first-child {
     color: #bfe9c1;
@@ -47,7 +50,7 @@
 
 .korisnik h2 {
     margin-left: 20px;
-    color: #007bff;
+    color: #007BFF;
     cursor: pointer;
 }
 
@@ -63,6 +66,7 @@
 body {
     font-family: 'Arial', sans-serif;
     margin: 20px;
+    /* background: linear-gradient(135deg, #000000, #040e46); */
     background: url(https://sportske-vesti.rs/wp-content/uploads/2023/11/kk-partizan-1.jpg);
     background-size: cover;
     color: #333;
@@ -76,7 +80,7 @@ h1 {
     padding-bottom: 15px;
     margin-bottom: 30px;
     font-size: 4.5em;
-    font-family: 'Arial Narrow Bold', sans-serif;
+    font-family: 'Arial Narrow Bold', sans-serif
 }
 
 /* Lista */
@@ -103,7 +107,7 @@ li {
 
 li:hover {
     background-color: #f1f1f1;
-    border-color: #4caf50;
+    border-color: #4CAF50;
     transform: scale(1.02);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
@@ -129,7 +133,7 @@ li:hover {
 
 /* Dugme */
 button {
-    background-color: #4caf50;
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
@@ -141,4 +145,32 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+.match-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrira listu */
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.match-list li {
+    width: 60%; /* Prilagodi širinu da ne bude preusko */
+    background-color: #fff;
+    margin: 15px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.match-list li:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.02);
 }

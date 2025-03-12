@@ -1,117 +1,72 @@
-import React, { useEffect, useState } from 'react';
-import { fetchMatches, buyTicket, loginUser, logoutUser } from './services/api';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import axios from 'axios';
+import Navbar from './components/NavBar';
+import SortButtons from './components/SortButtons';
+import MatchCard from './components/MatchCard';
 import './App.css';
 
 const App = () => {
-    const [user, setUser] = useState(null);  // Stanje za korisnika
-    const [matches, setMatches] = useState([]);  // Stanje za utakmice
+  const [matches, setMatches] = useState([]);
+  const [user] = useState('test_korisnik'); // Kasnije možeš dohvatiti pravog korisnika
+  const API_URL = "http://127.0.0.1:8000/api/utakmice/"; // Pravi API za utakmice
 
-    // Funkcija za dobavljanje utakmica sa backenda
-    const fetchMatchesData = async () => {
-        try {
-            const data = await fetchMatches();
-            setMatches(data);
-        } catch (error) {
-            console.error('Došlo je do greške pri dobavljanju utakmica:', error);
-        }
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        const response = await axios.get(API_URL);
+        setMatches(response.data);
+      } catch (error) {
+        console.error("Greška pri učitavanju utakmica:", error);
+      }
     };
 
-    // Pozovi funkciju za dobavljanje podataka prilikom učitavanja komponente
-    useEffect(() => {
-        fetchMatchesData();
-    }, []);
+    fetchMatches();
+  }, []);
 
-    // Funkcija za logout
-    const handleLogout = () => {
-        logoutUser();
-        setUser(null);  // Resetuj stanje korisnika
-        console.log('Korisnik se odjavio');
-    };
+  const handleSort = (criteria) => {
+    console.log("Sortiram po:", criteria);
+    const sortedMatches = [...matches].sort((a, b) => {
+      if (criteria === "protivnik") return a.protivnik.localeCompare(b.protivnik);
+      if (criteria === "datumVreme") return new Date(a.datumVreme) - new Date(b.datumVreme);
+      if (criteria === "lokacija") return a.lokacija.localeCompare(b.lokacija);
+      return 0;
+    });
+    setMatches(sortedMatches);
+  };
 
-    // Funkcija za prikaz kupljenih karata
-    const handleKupljeneKarte = () => {
-        // Dodaj logiku za prikaz kupljenih karata
-        console.log('Prikaz kupljenih karata');
-    };
+  const handleBuyTicket = (matchId) => {
+    console.log("Kupujem kartu za utakmicu ID:", matchId);
+    // Ovde možeš dodati logiku kupovine (npr. POST zahtev na backend)
+  };
 
-    // Funkcija za sortiranje
-    const handleSort = (sortType) => {
-        // Dodaj logiku za sortiranje
-        console.log('Sortiraj po:', sortType);
-    };
-
-    // Funkcija za kupovinu karata
-    const handleBuyTicket = async (id) => {
-        try {
-            await buyTicket(id);
-            console.log('Kupovina karte za utakmicu sa ID:', id);
-            // Osvježi podatke o utakmicama nakon kupovine
-            fetchMatchesData();
-        } catch (error) {
-            console.error('Došlo je do greške pri kupovini karte:', error);
-        }
-    };
-
-    // Funkcija za prijavu korisnika
-    const handleLogin = async (username, password) => {
-        try {
-            const tokenData = await loginUser(username, password);
-            localStorage.setItem('token', tokenData.access);  // Sačuvaj token
-            setUser({ username });  // Postavi stanje korisnika
-            console.log('Prijava uspešna!');
-        } catch (error) {
-            console.error('Došlo je do greške pri prijavi:', error);
-        }
-    };
-
-    return (
-        <div className="App">
-            <h1>Kkartizan</h1>
-
-            {/* Prikaz korisnika i dugmadi za logout i kupljene karte */}
-            {user ? (
-                <div className="korisnik">
-                    <h2>Korisnik: {user.username}</h2>
-                    <button className="menibtn" onClick={handleLogout}>
-                        Logout
-                    </button>
-                    <button className="menibtn" onClick={handleKupljeneKarte}>
-                        Kupljene karte
-                    </button>
-                </div>
-            ) : (
-                <div>
-                    <h2>Prijavi se</h2>
-                    <button onClick={() => handleLogin('korisnik123', 'lozinka123')}>
-                        Prijavi se (mock)
-                    </button>
-                </div>
-            )}
-
-            {/* Dugmad za sortiranje */}
-            <div className="sort-buttons">
-                <button onClick={() => handleSort('protivnik')}>Sortiraj po protivniku</button>
-                <button onClick={() => handleSort('datumVreme')}>Sortiraj po datumu</button>
-                <button onClick={() => handleSort('lokacija')}>Sortiraj po lokaciji</button>
-            </div>
-
-            {/* Lista utakmica */}
-            <ul>
-                {matches.map((match) => (
-                    <li key={match.id}>
-                        <img src={match.urlSlike} alt="Utakmica" width="330" height="180" />
-                        <div className="match-info">
-                            <span>Partizan VS {match.protivnik}</span>
-                            <span className="date">
-                                {new Date(match.datumVreme).toLocaleString()}
-                            </span>
-                        </div>
-                        <button onClick={() => handleBuyTicket(match.id)}>Kupi karte</button>
-                    </li>
+  return (
+    <Router>
+      <div className="app">
+        <Navbar 
+          user={user} 
+          onLogout={() => console.log("Odjavi se")} 
+          onShowTickets={() => console.log("Kupljene karte")} 
+        />
+        <header className="header">
+          <h1>KKartizan</h1>
+        </header>
+        <SortButtons onSort={handleSort} />
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <ul className="match-list">
+                {matches.map(match => (
+                  <MatchCard key={match.id} match={match} onBuyTicket={handleBuyTicket} />
                 ))}
-            </ul>
-        </div>
-    );
+              </ul>
+            } 
+          />
+        </Routes>
+      </div>
+    </Router>
+  );
 };
 
 export default App;
