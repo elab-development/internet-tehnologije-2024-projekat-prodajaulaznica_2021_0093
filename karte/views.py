@@ -98,6 +98,8 @@ def karta_u_pdf(request, karta_id):
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="karta_{karta.id}.pdf"'
+
+
     
     p = canvas.Canvas(response)
     p.drawString(100, 750, "Karta")
@@ -108,3 +110,7 @@ def karta_u_pdf(request, karta_id):
 
     p.save()
     return response
+
+class KarteViewSet(viewsets.ModelViewSet):
+    queryset = Karte.objects.all()
+    serializer_class = KarteSerializer

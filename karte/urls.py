@@ -1,13 +1,16 @@
+# karte/urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views
 from .views import TipKarteViewSet, KarteViewSet, PreostaloKarataViewSet
 
+# Definisanje router-a za API rute
 router = DefaultRouter()
 router.register(r'tipkarte', TipKarteViewSet)
 router.register(r'karte', KarteViewSet)
 router.register(r'preostalo', PreostaloKarataViewSet)
 
+# URL rute za karte
 urlpatterns = [
     path('', views.kupovinaForma, name='buypage'),
     path('login/', views.login_view, name='login'),
@@ -17,8 +20,8 @@ urlpatterns = [
     path('greska', views.greska, name='greska'),
     path('kupljene', views.kupljene_karte, name='kupljene'),
     path('export-pdf/<int:karta_id>/', views.karta_u_pdf, name='export'),
-    path('karte/', KarteViewSet.as_view({'get': 'list', 'post': 'create'}), name='karte-list-create'),
-    path('preostalo/', PreostaloKarataViewSet.as_view({'get': 'list'}), name='preostalo-list'),
     path('kupovina/', views.kupovinaForma, name='kupovina'),
-    path('api/', include(router.urls)),  # Dodavanje routera za API
+    
+    # API rute za karte
+    path('api/', include(router.urls)),  # Ovo uključuje rute iz routera za tipkarte, karte i preostalo
 ]
