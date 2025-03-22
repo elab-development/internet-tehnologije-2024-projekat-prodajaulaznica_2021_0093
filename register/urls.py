@@ -6,5 +6,5 @@ router = DefaultRouter()
 router.register(r'korisnici', KorisnikViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),  # API rute za korisnike
 ]

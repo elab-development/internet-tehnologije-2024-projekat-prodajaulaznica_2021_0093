@@ -6,8 +6,8 @@ const Navbar = ({ user, onLogout, onShowTickets }) => {
     <nav className="navbar">
       <div className="user-info">{user}</div>
       <div className="nav-buttons">
-        <button onClick={onLogout}>Odjavi se</button>
         <button onClick={onShowTickets}>Kupljene karte</button>
+        <button onClick={onLogout}>Odjavi se</button>
       </div>
     </nav>
   );

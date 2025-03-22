@@ -4,4 +4,4 @@ from .models import Korisnik
 class KorisnikSerializer(serializers.ModelSerializer):
     class Meta:
         model = Korisnik
-        fields = '__all__'
+        fields = "__all__"  

@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class UtakmiceConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'utakmice'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "utakmice"

@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('karte', '0005_remove_karte_cena_preostalokarata_cena'),
+        ("karte", "0005_remove_karte_cena_preostalokarata_cena"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='karte',
-            name='cena',
+            model_name="karte",
+            name="cena",
             field=models.DecimalField(decimal_places=2, default=5000.0, max_digits=7),
         ),
         migrations.AlterField(
-            model_name='preostalokarata',
-            name='cena',
+            model_name="preostalokarata",
+            name="cena",
             field=models.DecimalField(decimal_places=2, default=5000.0, max_digits=7),
         ),
     ]

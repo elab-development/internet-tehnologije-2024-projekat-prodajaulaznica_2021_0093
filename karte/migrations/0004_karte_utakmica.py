@@ -7,14 +7,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('karte', '0003_alter_karte_kupac_alter_karte_tip_karte_and_more'),
-        ('utakmice', '0002_utakmica_urlslike'),
+        ("karte", "0003_alter_karte_kupac_alter_karte_tip_karte_and_more"),
+        ("utakmice", "0002_utakmica_urlslike"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='karte',
-            name='utakmica',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.RESTRICT, to='utakmice.utakmica'),
+            model_name="karte",
+            name="utakmica",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.RESTRICT,
+                to="utakmice.utakmica",
+            ),
         ),
     ]

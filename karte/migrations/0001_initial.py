@@ -9,34 +9,80 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('loginovanje', '0001_initial'),
-        ('utakmice', '0001_initial'),
+        ("loginovanje", "0001_initial"),
+        ("utakmice", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='TipKarte',
+            name="TipKarte",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('naziv', models.CharField(max_length=100)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("naziv", models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
-            name='PreostaloKarata',
+            name="PreostaloKarata",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('preostalo', models.PositiveIntegerField()),
-                ('utakmica', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='utakmice.utakmica')),
-                ('tip_karte', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='karte.tipkarte')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("preostalo", models.PositiveIntegerField()),
+                (
+                    "utakmica",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="utakmice.utakmica",
+                    ),
+                ),
+                (
+                    "tip_karte",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="karte.tipkarte"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Karte',
+            name="Karte",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cena', models.DecimalField(decimal_places=2, max_digits=6)),
-                ('kupac', models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to='loginovanje.korisnik')),
-                ('tip_karte', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='karte.tipkarte')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("cena", models.DecimalField(decimal_places=2, max_digits=6)),
+                (
+                    "kupac",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="loginovanje.korisnik",
+                    ),
+                ),
+                (
+                    "tip_karte",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="karte.tipkarte"
+                    ),
+                ),
             ],
         ),
     ]

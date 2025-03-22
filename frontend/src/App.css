@@ -174,3 +174,24 @@ button:hover {
     background-color: #f1f1f1;
     transform: scale(1.02);
 }
+
+/* Centriranje formi za Login i Register */
+.login-container, .register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Puna visina ekrana */
+    background: url(https://sportske-vesti.rs/wp-content/uploads/2023/11/kk-partizan-1.jpg);
+    background-size: cover;
+  }
+  
+  .container {
+    background: #ffffff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+  }
+

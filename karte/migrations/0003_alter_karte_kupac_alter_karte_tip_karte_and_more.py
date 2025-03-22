@@ -8,30 +8,39 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('karte', '0002_alter_karte_kupac'),
-        ('utakmice', '0002_utakmica_urlslike'),
+        ("karte", "0002_alter_karte_kupac"),
+        ("utakmice", "0002_utakmica_urlslike"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='karte',
-            name='kupac',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to=settings.AUTH_USER_MODEL),
+            model_name="karte",
+            name="kupac",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.RESTRICT,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='karte',
-            name='tip_karte',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to='karte.tipkarte'),
+            model_name="karte",
+            name="tip_karte",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.RESTRICT, to="karte.tipkarte"
+            ),
         ),
         migrations.AlterField(
-            model_name='preostalokarata',
-            name='tip_karte',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to='karte.tipkarte'),
+            model_name="preostalokarata",
+            name="tip_karte",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.RESTRICT, to="karte.tipkarte"
+            ),
         ),
         migrations.AlterField(
-            model_name='preostalokarata',
-            name='utakmica',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to='utakmice.utakmica'),
+            model_name="preostalokarata",
+            name="utakmica",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.RESTRICT, to="utakmice.utakmica"
+            ),
         ),
     ]

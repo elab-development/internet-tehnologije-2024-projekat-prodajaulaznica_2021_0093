@@ -7,14 +7,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('karte', '0001_initial'),
-        ('loginovanje', '0001_initial'),
+        ("karte", "0001_initial"),
+        ("loginovanje", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='karte',
-            name='kupac',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to='loginovanje.korisnik'),
+            model_name="karte",
+            name="kupac",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.RESTRICT,
+                to="loginovanje.korisnik",
+            ),
         ),
     ]

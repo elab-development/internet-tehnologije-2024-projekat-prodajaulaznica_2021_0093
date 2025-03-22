@@ -6,4 +6,3 @@ class Korisnik(models.Model):
     password = models.CharField(max_length=100)
     email = models.EmailField()
     brojKartice = models.CharField(max_length=20)
-
