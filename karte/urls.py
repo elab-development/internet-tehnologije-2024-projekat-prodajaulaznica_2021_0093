@@ -23,5 +23,7 @@ urlpatterns = [
         "export-pdf/<int:karta_id>/", views.karta_u_pdf, name="export"
     ),  # Ispravljen duplikat
     path("kupovina/", views.kupovinaForma, name="kupovina"),
-    path("api/", include(router.urls)),  # Dodavanje routera za API
+    path("api/", include(router.urls)),
+    path('api/karte/kupljene/<str:username>/', views.kupljene_karte_api),
+
 ]

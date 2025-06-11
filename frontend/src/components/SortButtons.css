@@ -1,30 +1,23 @@
 .sort-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin: 2rem auto;
-    padding: 1rem;
-  }
-  
-  .sort-buttons button {
-    background-color: #4CAF50; /* Zelena pozadina */
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.1em;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .sort-buttons button:hover {
-    background-color: #388E3C; /* Tamnija zelena prilikom hovera */
-    transform: translateY(-3px);
-  }
-  
-  .sort-buttons button:active {
-    background-color: #2E7D32;
-    transform: translateY(1px);
-  }
-  
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 10px 0;
+  gap: 10px;
+}
+
+.sort-buttons button {
+  padding: 10px 20px;
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #4CAF50;
+  font-weight: bold;
+  font-size: 1em;
+  transition: 0.3s;
+}
+
+.sort-buttons button:hover {
+  background-color: #4CAF50;
+  color: white;
+  transform: translateY(-3px);
+}

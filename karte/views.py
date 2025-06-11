@@ -15,6 +15,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from rest_framework.decorators import api_view
+
 
 class TipKarteViewSet(viewsets.ModelViewSet):
     queryset = TipKarte.objects.all()
@@ -122,6 +124,13 @@ def karta_u_pdf(request, karta_id):
     p.drawString(100, 730, f"Tip karte: {karta.tip_karte}")
     p.drawString(100, 710, f"Cena: {karta.cena} RSD")
     p.drawString(100, 690, f"Kupac: {request.user.username}")
-    p.drawString(100, 670, f"Utakmica: {karta.utakmica.naziv}")  # Assuming `naziv` is the field for the match name
+    p.drawString(100, 670, f"Utakmica: Partizan vs {karta.utakmica.protivnik} - {karta.utakmica.datumVreme.strftime('%d.%m.%Y %H:%M')}")
     p.save()
     return response
+
+@api_view(['GET'])
+def kupljene_karte_api(request, username):
+    user = User.objects.get(username=username)
+    kupljene = Karte.objects.filter(kupac=user)
+    serializer = KarteSerializer(kupljene, many=True)
+    return Response(serializer.data)

@@ -1,10 +1,6 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import KorisnikViewSet
-
-router = DefaultRouter()
-router.register(r'korisnici', KorisnikViewSet)
+from django.urls import path
+from .views import RegisterView
 
 urlpatterns = [
-    path('api/', include(router.urls)),  # API rute za korisnike
+    path('', RegisterView.as_view(), name='api_register'),
 ]

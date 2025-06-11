@@ -2,35 +2,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
-  padding: 1rem;
-  margin: 0;
-  width: 100%;
-  box-sizing: border-box;
-  position: fixed;
+  padding: 15px 30px;
+  background: rgba(0, 0, 0, 0.4); /* samo lagana providnost da tekst stoji na slici */
+  backdrop-filter: blur(3px);
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 1000;
 }
 
-.user-info {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: white;
-}
-
-.nav-buttons button {
-  margin-left: 1rem;
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: #007BFF;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.nav-buttons button:hover {
-  background-color: #0056b3;
+.logo {
+  font-size: 2.5em;
+  font-family: 'Arial Narrow Bold', sans-serif;
+  color: #bfe9c1;
+  text-decoration: none;
 }
