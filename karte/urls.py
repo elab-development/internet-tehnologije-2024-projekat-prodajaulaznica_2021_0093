@@ -25,5 +25,8 @@ urlpatterns = [
     path("kupovina/", views.kupovinaForma, name="kupovina"),
     path("api/", include(router.urls)),
     path('api/karte/kupljene/<str:username>/', views.kupljene_karte_api),
-
+    path("api/kupovina/<int:utakmica_id>/", views.kupovina_api, name="kupovina_api"),
+    path("", views.kupovinaForma, name="buypage"),
+    path("api/", include(router.urls)),
+    path("api/kupovina/<int:utakmica_id>/", views.kupovina_api, name="kupovina_api"),
 ]

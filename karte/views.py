@@ -134,3 +134,28 @@ def kupljene_karte_api(request, username):
     kupljene = Karte.objects.filter(kupac=user)
     serializer = KarteSerializer(kupljene, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def kupovina_api(request, utakmica_id):
+    try:
+        utakmica = Utakmica.objects.get(id=utakmica_id)
+        ostalo = PreostaloKarata.objects.filter(utakmica=utakmica)
+
+        ostalo_data = [
+            {
+                'tip_karte': o.tip_karte.naziv,   # <-- OVDE JE KLJUČNA PROMENA
+                'preostalo': o.preostalo,
+                'cena': o.cena
+            } for o in ostalo
+        ]
+
+        data = {
+            'utakmica': f"Partizan VS {utakmica.protivnik} - {utakmica.datumVreme.strftime('%d.%m.%Y %H:%M')}",
+            'lokacija': utakmica.lokacija,
+            'karte': ostalo_data
+        }
+
+        return Response(data)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)

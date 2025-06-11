@@ -7,6 +7,9 @@ import KupljeneKarte from './components/KupljeneKarte';
 import Navbar from './components/NavBar';
 import { UserProvider } from './context/UserContext';
 import './App.css';
+import Kupovina from './components/Kupovina';
+
+
 
 const App = () => {
   return (
@@ -18,6 +21,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/kupljene-karte" element={<KupljeneKarte />} />
+          <Route path="/kupovina/:matchId" element={<Kupovina />} />
         </Routes>
       </Router>
     </UserProvider>
