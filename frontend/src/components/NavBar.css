@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background: rgba(0, 0, 0, 0.4); /* samo lagana providnost da tekst stoji na slici */
+  background: rgba(0, 0, 0, 0.4); 
   backdrop-filter: blur(3px);
   position: sticky;
   top: 0;

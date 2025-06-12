@@ -1,98 +1,61 @@
-body {
-    background-image: url('https://sportske-vesti.rs/wp-content/uploads/2023/11/kk-partizan-1.jpg');
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .kupovina-page {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 30px 20px;
-    margin: 40px auto;
-    border-radius: 15px;
-    max-width: 600px;
-    color: white;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-  }
-  
-  .header-info h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
-    color: #ffd700;
-    text-align: center;
-  }
-  
-  .header-info h3 {
-    font-size: 1.3em;
-    color: #ddd;
-    text-align: center;
-    margin-bottom: 25px;
-  }
-  
-  .karte-info {
-    margin-bottom: 25px;
-  }
-  
-  .kartica {
-    background-color: rgba(255,255,255,0.1);
-    padding: 12px 18px;
-    margin: 10px 0;
-    border-radius: 8px;
-    font-size: 1em;
-    text-align: center;
-  }
-  
-  .kartica div {
-    margin: 5px 0;
-  }
-  
-  .kupovina-forma {
-    background-color: rgba(255,255,255,0.15);
+.kupovina-container {
+    max-width: 700px;
+    margin: 30px auto;
     padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .form-group {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.kupovina-container h2, .kupovina-container h3 {
+    text-align: center;
     margin-bottom: 15px;
-  }
-  
-  label {
+}
+
+.preostalo-lista {
+    margin-bottom: 30px;
+}
+
+.preostalo-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+}
+
+.preostalo-item h4 {
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+form label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-    font-size: 1.1em;
-  }
-  
-  select {
+}
+
+form select {
     width: 100%;
-    padding: 8px;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    border: none;
-    font-size: 1em;
-  }
-  
-  button {
+}
+
+form button {
+    display: block;
     width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1em;
+    padding: 12px;
     font-weight: bold;
     color: white;
     background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #388E3C;
-  }
-  
-  .loading, .error {
-    color: white;
-    font-size: 1.3em;
-    text-align: center;
-  }
-  
+}
+
+form button:hover {
+    background-color: #45a049;
+}

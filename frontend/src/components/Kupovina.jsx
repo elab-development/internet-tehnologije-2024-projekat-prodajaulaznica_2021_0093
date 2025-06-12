@@ -1,73 +1,95 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../context/UserContext';
 import './Kupovina.css';
 
 const Kupovina = () => {
   const { matchId } = useParams();
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+
+  const [utakmica, setUtakmica] = useState(null);
+  const [karte, setKarte] = useState([]);
+  const [tipKarteId, setTipKarteId] = useState('');
+  const [brojKarata, setBrojKarata] = useState(1);
 
   useEffect(() => {
-    const fetchKupovina = async () => {
+    const fetchData = async () => {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/karte/api/kupovina/${matchId}/`);
-        setData(response.data);
-      } catch (err) {
-        console.error("Greška pri učitavanju:", err);
-        setError(err);
-      } finally {
-        setLoading(false);
+        setUtakmica(response.data);
+        setKarte(response.data.karte);
+      } catch (error) {
+        console.error('Greška pri učitavanju:', error);
       }
     };
-
-    fetchKupovina();
+    fetchData();
   }, [matchId]);
 
-  if (loading) return <div className="loading">Učitavanje...</div>;
-  if (error) return <div className="error">Došlo je do greške.</div>;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      await axios.post('http://127.0.0.1:8000/karte/api/kupovina/kupi/', {
+        utakmica_id: parseInt(matchId),
+        tip_karte_id: parseInt(tipKarteId),
+        broj_karata: parseInt(brojKarata),
+        username: user.username
+      });
+  
+      alert("Kupovina uspešna!");
+      navigate('/');  // Ovde šaljemo na home page (početak)
+    } catch (error) {
+      console.error("Greška pri kupovini:", error);
+      alert("Greška pri kupovini");
+    }
+  };
+
 
   return (
-    <div className="kupovina-page">
-      <div className="header-info">
-        <h1>{data.utakmica}</h1>
-        <h3>Lokacija: {data.lokacija}</h3>
-      </div>
+    <div className="kupovina-container">
+      {utakmica ? (
+        <>
+          <h2>{utakmica.utakmica}</h2>
+          <p><strong>Lokacija:</strong> {utakmica.lokacija}</p>
 
-      <div className="karte-info">
-        {data.karte.map((item, index) => (
-          <div key={index} className="kartica">
-            <div><strong>{item.tip_karte}</strong></div>
-            <div>Preostalo: {item.preostalo}</div>
-            <div>Cena: {item.cena} RSD</div>
-          </div>
-        ))}
-      </div>
+          {karte.map((karta) => (
+            <div key={karta.id} className="karta-info">
+              <p><strong>{karta.tip_karte}</strong></p>
+              <p>Preostalo: {karta.preostalo}</p>
+              <p>Cena: {parseFloat(karta.cena).toFixed(2)} RSD</p>
+            </div>
+          ))}
 
-      <div className="kupovina-forma">
-        <form>
-          <div className="form-group">
-            <label>Tip karte:</label>
-            <select>
-              {data.karte.map((item, index) => (
-                <option key={index} value={item.tip_karte}>{item.tip_karte}</option>
-              ))}
-            </select>
-          </div>
+          <form onSubmit={handleSubmit} className="kupovina-form">
+            <div className="form-group">
+              <label>Izaberite tip karte:</label>
+              <select value={tipKarteId} onChange={(e) => setTipKarteId(parseInt(e.target.value))} required>
+              <option value="">-- Odaberite --</option>
+                {karte.map((karta) => (
+                  <option key={karta.id} value={karta.tip_karte_id}>
+                    {karta.tip_karte} - {parseFloat(karta.cena).toFixed(2)} RSD
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className="form-group">
-            <label>Broj karata:</label>
-            <select>
+            <div className="form-group">
+              <label>Broj karata:</label>
+              <select value={brojKarata} onChange={(e) => setBrojKarata(parseInt(e.target.value))}>
               {[1, 2, 3, 4].map(broj => (
-                <option key={broj} value={broj}>{broj}</option>
-              ))}
-            </select>
-          </div>
+                  <option key={broj} value={broj}>{broj}</option>
+                ))}
+              </select>
+            </div>
 
-          <button type="submit">Kupi karte</button>
-        </form>
-      </div>
+            <button type="submit">Potvrdi kupovinu</button>
+          </form>
+        </>
+      ) : (
+        <p>Učitavanje podataka o utakmici...</p>
+      )}
     </div>
   );
 };

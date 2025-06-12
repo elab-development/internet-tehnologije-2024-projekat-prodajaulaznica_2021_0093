@@ -15,10 +15,6 @@ urlpatterns = [
     path("api/auth/", include("loginovanje.urls")),
     path("api/", include("api.urls")),
 
-    # Autentifikacija za Django templates
-    path("accounts/login/", views.login_view, name="login"),
-    path("accounts/logout/", views.logout_view, name="logout"),
-    path("accounts/register/", views.register_view, name="register"),
 
     # JWT tokeni 
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),

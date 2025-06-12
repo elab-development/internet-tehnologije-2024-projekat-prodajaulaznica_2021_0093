@@ -1,0 +1,33 @@
+body {
+    background: url(https://sportske-vesti.rs/wp-content/uploads/2023/11/kk-partizan-1.jpg) no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.afterbuy-container {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    border-radius: 15px;
+    margin: 150px auto;
+    width: 40%;
+    text-align: center;
+    color: white;
+}
+
+.afterbuy-container h1, .afterbuy-container h2 {
+    margin-bottom: 20px;
+}
+
+.afterbuy-container a {
+    font-size: 1.5em;
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.afterbuy-container a:hover {
+    background: #45a049;
+}

@@ -20,7 +20,7 @@ const NavBar = () => {
       <div className="navbar-right">
         {user ? (
           <>
-            <span className="username">Pozdrav, {user.username}</span>
+            <span className="username"> {user.username}</span>
             <button onClick={() => navigate('/kupljene-karte')}>Kupljene karte</button>
             <button onClick={handleLogout} className="logout">Odjavi se</button>
           </>
