@@ -30,7 +30,7 @@ const Login = () => {
       navigate('/');
     } catch (err) {
       console.error(err);
-      setError("Pogrešno korisničko ime ili lozinka");
+      setError("Pogrešno korisničko ime ili lozinka!");
     }
   };
 
