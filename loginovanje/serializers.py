@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from register.models import Korisnik
- 
+from django.contrib.auth.models import User
+
 class KorisnikSerializer(serializers.ModelSerializer):
-     class Meta:
-         model = Korisnik
-         fields = ['id', 'username', 'email', 'brojKartice']
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']

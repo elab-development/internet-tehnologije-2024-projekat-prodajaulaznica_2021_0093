@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
 import { UserContext } from '../context/UserContext';
 import './Kupovina.css';
 
@@ -17,7 +17,7 @@ const Kupovina = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/karte/api/kupovina/${matchId}/`);
+        const response = await axiosInstance.get(`/karte/api/kupovina/${matchId}/`);
         setUtakmica(response.data);
         setKarte(response.data.karte);
       } catch (error) {
@@ -29,23 +29,21 @@ const Kupovina = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      await axios.post('http://127.0.0.1:8000/karte/api/kupovina/kupi/', {
+      await axiosInstance.post('/karte/api/kupovina/kupi/', {
         utakmica_id: parseInt(matchId),
         tip_karte_id: parseInt(tipKarteId),
         broj_karata: parseInt(brojKarata),
-        username: user.username
       });
-  
+
       alert("Kupovina uspešna!");
-      navigate('/');  // Ovde šaljemo na home page (početak)
+      navigate('/');
     } catch (error) {
       console.error("Greška pri kupovini:", error);
-      alert("Greška pri kupovini");
+      alert("Greška pri kupovini. Proverite da li ste prijavljeni.");
     }
   };
-
 
   return (
     <div className="kupovina-container">
@@ -65,8 +63,8 @@ const Kupovina = () => {
           <form onSubmit={handleSubmit} className="kupovina-form">
             <div className="form-group">
               <label>Izaberite tip karte:</label>
-              <select value={tipKarteId} onChange={(e) => setTipKarteId(parseInt(e.target.value))} required>
-              <option value="">-- Odaberite --</option>
+              <select value={tipKarteId} onChange={(e) => setTipKarteId(e.target.value)} required>
+                <option value="">-- Odaberite --</option>
                 {karte.map((karta) => (
                   <option key={karta.id} value={karta.tip_karte_id}>
                     {karta.tip_karte} - {parseFloat(karta.cena).toFixed(2)} RSD
@@ -78,7 +76,7 @@ const Kupovina = () => {
             <div className="form-group">
               <label>Broj karata:</label>
               <select value={brojKarata} onChange={(e) => setBrojKarata(parseInt(e.target.value))}>
-              {[1, 2, 3, 4].map(broj => (
+                {[1, 2, 3, 4].map(broj => (
                   <option key={broj} value={broj}>{broj}</option>
                 ))}
               </select>

@@ -2,32 +2,32 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Korisnik
+from django.contrib.auth.models import User
+from .models import Profil
+from .serializers import KorisnikSerializer
 
 class RegisterView(APIView):
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
         email = request.data.get('email')
-        brojKartice = request.data.get('brojKartice')
+        broj_kartice = request.data.get('brojKartice')
 
-        if not username or not password or not email or not brojKartice:
+        if not username or not password or not email or not broj_kartice:
             return Response({"error": "Sva polja su obavezna."}, status=status.HTTP_400_BAD_REQUEST)
 
-        if Korisnik.objects.filter(username=username).exists():
+        if User.objects.filter(username=username).exists():
             return Response({"error": "Korisničko ime već postoji."}, status=status.HTTP_400_BAD_REQUEST)
 
-        korisnik = Korisnik.objects.create(
-            username=username,
-            password=password,  # Ako želiš, možeš ovde dodati hash šifrovanje lozinke
-            email=email,
-            brojKartice=brojKartice
-        )
+        user = User.objects.create_user(username=username, password=password, email=email)
+        Profil.objects.create(user=user, broj_kartice=broj_kartice)
 
-        refresh = RefreshToken.for_user(korisnik)
+        refresh = RefreshToken.for_user(user)
+
+        user_data = KorisnikSerializer(user).data
+
         return Response({
             "refresh": str(refresh),
             "access": str(refresh.access_token),
-            "username": korisnik.username,
-            "email": korisnik.email,
+            "user": user_data
         }, status=status.HTTP_201_CREATED)

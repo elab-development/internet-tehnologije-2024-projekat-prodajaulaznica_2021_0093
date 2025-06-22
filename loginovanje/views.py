@@ -1,10 +1,9 @@
-from django.shortcuts import render
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
-from register.models import Korisnik
+from django.contrib.auth.models import User
 
 
 class LoginView(APIView):
@@ -12,22 +11,21 @@ class LoginView(APIView):
         username = request.data.get("username")
         password = request.data.get("password")
 
-        try:
-            korisnik = Korisnik.objects.get(username=username, password=password)
-        except Korisnik.DoesNotExist:
+        user = authenticate(username=username, password=password)
+
+        if user is None:
             return Response(
                 {"error": "Pogrešno korisničko ime ili lozinka"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Generišemo JWT token
-        refresh = RefreshToken.for_user(korisnik)
+        refresh = RefreshToken.for_user(user)
         return Response(
             {
                 "refresh": str(refresh),
                 "access": str(refresh.access_token),
-                "username": korisnik.username,
-                "email": korisnik.email,
+                "username": user.username,
+                "email": user.email,
             }
         )
 

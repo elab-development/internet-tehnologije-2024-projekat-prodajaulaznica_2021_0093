@@ -1,0 +1,55 @@
+.kupljene-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.kupljene-container h2 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.karta-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 15px;
+  background-color: #f7f7f7;
+  transition: transform 0.2s ease;
+}
+
+.karta-item:hover {
+  transform: scale(1.01);
+}
+
+.karta-item p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #333;
+}
+
+.karta-item strong {
+  color: #000;
+}
+
+.karta-item button {
+  margin-top: 10px;
+  padding: 8px 14px;
+  font-size: 14px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.karta-item button:hover {
+  background-color: #0056b3;
+}

@@ -1,13 +1,16 @@
 from rest_framework import viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth.models import User
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
 from .models import TipKarte, Karte, PreostaloKarata
 from utakmice.models import Utakmica
 from .serializers import TipKarteSerializer, KarteSerializer, PreostaloKarataSerializer
-from django.core.exceptions import ObjectDoesNotExist
-
+from django.shortcuts import get_object_or_404
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class TipKarteViewSet(viewsets.ModelViewSet):
     queryset = TipKarte.objects.all()
@@ -22,6 +25,7 @@ class PreostaloKarataViewSet(viewsets.ModelViewSet):
     serializer_class = PreostaloKarataSerializer
 
 @api_view(['GET'])
+@permission_classes([AllowAny])  # Omogućen javni pristup bez autentifikacije
 def kupovina_api(request, utakmica_id):
     try:
         utakmica = Utakmica.objects.get(id=utakmica_id)
@@ -50,32 +54,34 @@ def register_user(request):
     try:
         username = request.data.get('username')
         password = request.data.get('password')
+        email = request.data.get('email')
 
         if User.objects.filter(username=username).exists():
-            return Response({'error': 'Korisničko ime već postoji.'}, status=400)
+            return Response({'error': 'Korisnicko ime vec postoji.'}, status=400)
 
-        User.objects.create_user(username=username, password=password)
-        return Response({'message': 'Uspešno registrovan korisnik.'}, status=201)
+        user = User.objects.create_user(username=username, password=password, email=email)
+        refresh = RefreshToken.for_user(user)
+
+        return Response({
+            'message': 'Uspesna registracija.',
+            'username': user.username,
+            'email': user.email,
+            'access': str(refresh.access_token),
+            'refresh': str(refresh)
+        }, status=201)
 
     except Exception as e:
         return Response({'error': str(e)}, status=500)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def kupi_karte_api(request):
     try:
-        print("PRIMLJENI PODACI:", request.data)
-
         utakmica_id = int(request.data.get('utakmica_id'))
         tip_karte_id = int(request.data.get('tip_karte_id'))
         broj_karata = int(request.data.get('broj_karata'))
-        username = request.data.get('username')
 
-        print("utakmica_id:", utakmica_id)
-        print("tip_karte_id:", tip_karte_id)
-        print("broj_karata:", broj_karata)
-        print("username:", username)
-
-        user = User.objects.get(username=username)
+        user = request.user
         utakmica = Utakmica.objects.get(id=utakmica_id)
         tip_karte = TipKarte.objects.get(id=tip_karte_id)
         preostalo = PreostaloKarata.objects.get(utakmica=utakmica, tip_karte=tip_karte)
@@ -91,10 +97,47 @@ def kupi_karte_api(request):
                     utakmica=utakmica,
                     cena=preostalo.cena
                 )
-            return Response({'message': 'Kupovina uspešna'})
+            return Response({'message': 'Kupovina uspesna'})
         else:
             return Response({'error': 'Nema dovoljno karata'}, status=400)
 
     except Exception as e:
-        print("GRESKA NA BACKENDU:", str(e))  
         return Response({'error': str(e)}, status=500)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def moje_karte(request):
+    karte = Karte.objects.filter(kupac=request.user)
+    data = [
+        {
+            'id': karta.id,
+            'tip_karte': karta.tip_karte.naziv,
+            'utakmica': f"Partizan VS {karta.utakmica.protivnik} - {karta.utakmica.datumVreme.strftime('%d.%m.%Y %H:%M')}",
+            'cena': float(karta.cena)
+        } for karta in karte
+    ]
+    return Response(data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def preuzmi_kartu_pdf(request, karta_id):
+    karta = get_object_or_404(Karte, id=karta_id, kupac=request.user)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="karta_{karta.id}.pdf"'
+
+    p = canvas.Canvas(response)
+    p.drawString(100, 750, "Karta")
+    p.drawString(100, 730, f"Tip karte: {karta.tip_karte}")
+    p.drawString(100, 710, f"Cena: {karta.cena} RSD")
+    p.drawString(100, 690, f"Kupac: {request.user.username}")
+    p.drawString(100, 670, f"Utakmica: {karta.utakmica}")
+    p.save()
+    return response
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def moje_karte(request):
+    karte = Karte.objects.filter(kupac=request.user)
+    serializer = KarteSerializer(karte, many=True)
+    return Response(serializer.data)

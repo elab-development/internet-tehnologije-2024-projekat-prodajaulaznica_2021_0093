@@ -1,7 +1,15 @@
 from rest_framework import serializers
-from .models import Korisnik
+from django.contrib.auth.models import User
+from .models import Profil
+
+class ProfilSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profil
+        fields = ['broj_kartice']
 
 class KorisnikSerializer(serializers.ModelSerializer):
+    profil = ProfilSerializer(read_only=True)
+
     class Meta:
-        model = Korisnik
-        fields = "__all__"  
+        model = User
+        fields = ['id', 'username', 'email', 'profil']

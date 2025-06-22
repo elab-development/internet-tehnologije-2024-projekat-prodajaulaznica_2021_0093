@@ -10,9 +10,7 @@ import './App.css';
 import Kupovina from './components/Kupovina';
 import UspesnaKupovina from './components/UspesnaKupovina';
 import ErrorPage from './components/ErrorPage';
-
-
-
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
@@ -23,10 +21,27 @@ const App = () => {
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/kupljene-karte" element={<KupljeneKarte />} />
-          <Route path="/kupovina/:matchId" element={<Kupovina />} />
+
+          <Route
+            path="/kupljene-karte"
+            element={
+              <ProtectedRoute>
+                <KupljeneKarte />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/kupovina/:matchId"
+            element={
+              <ProtectedRoute>
+                <Kupovina />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/success" element={<UspesnaKupovina />} />
-          <Route path="/greska" element={<ErrorPage />} />
+          <Route path="/error" element={<ErrorPage />} />
         </Routes>
       </Router>
     </UserProvider>

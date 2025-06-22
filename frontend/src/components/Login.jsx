@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
 import { UserContext } from '../context/UserContext';
 import './Login.css';
 
@@ -9,28 +9,22 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useContext(UserContext);
+  const { login } = useContext(UserContext); // koristi login iz konteksta
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/auth/login/', {
+      const response = await axiosInstance.post('/api/token/', {
         username,
-        password
+        password,
       });
 
-      const userData = {
-        username: response.data.username,
-        email: response.data.email,
-        access: response.data.access,
-        refresh: response.data.refresh
-      };
-
-      login(userData);
+      const { access, refresh } = response.data;
+      login({ username }, access, refresh); // koristi context login
       navigate('/');
-    } catch (err) {
-      console.error(err);
-      setError("Pogrešno korisničko ime ili lozinka!");
+    } catch (error) {
+      console.error('Greška pri loginu:', error);
+      setError('Pogrešno korisničko ime ili lozinka.');
     }
   };
 
@@ -41,11 +35,23 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username:</label>
-            <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </div>
           <div className="form-group">
             <label htmlFor="password">Lozinka:</label>
-            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
           {error && <p className="error">{error}</p>}
           <button type="submit">Login</button>
