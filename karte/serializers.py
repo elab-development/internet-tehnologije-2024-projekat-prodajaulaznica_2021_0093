@@ -1,7 +1,7 @@
-# karte/serializers.py
 from rest_framework import serializers
 from .models import Karte, TipKarte, PreostaloKarata
 from utakmice.models import Utakmica
+from utakmice.serializers import UtakmicaSerializer  # dodato
 
 class TipKarteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,7 +10,7 @@ class TipKarteSerializer(serializers.ModelSerializer):
 
 class KarteSerializer(serializers.ModelSerializer):
     tip_karte = TipKarteSerializer(read_only=True)
-    utakmica = serializers.PrimaryKeyRelatedField(queryset=Utakmica.objects.all())
+    utakmica = UtakmicaSerializer(read_only=True)  # izmenjeno
 
     class Meta:
         model = Karte

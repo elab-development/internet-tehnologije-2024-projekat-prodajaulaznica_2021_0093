@@ -45,7 +45,7 @@ const KupljeneKarte = () => {
         <ul>
           {karte.map((karta) => (
             <li key={karta.id} className="karta-blok">
-              <p><strong>Utakmica:</strong> {karta.utakmica}</p>
+              <p><strong>Utakmica:</strong> {karta.utakmica.naziv}</p>
               <p><strong>Tip karte:</strong> {karta.tip_karte.naziv}</p>
               <p><strong>Cena:</strong> {karta.cena} RSD</p>
               <button className="download-btn" onClick={() => handleDownload(karta.id)}>
