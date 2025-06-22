@@ -33,12 +33,15 @@ const Register = () => {
 
       const userData = {
         username: response.data.username,
-        email: response.data.email,
-        access: response.data.access,
-        refresh: response.data.refresh
+        email: response.data.email
       };
 
-      login(userData);
+      const accessToken = response.data.access;
+      const refreshToken = response.data.refresh;
+
+      // ✅ Poziv login sa sva 3 parametra
+      login(userData, accessToken, refreshToken);
+
       navigate('/');
     } catch (err) {
       console.error(err);

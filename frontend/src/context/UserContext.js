@@ -13,11 +13,12 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const login = (userData, accessToken, refreshToken) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
-  };
+  setUser(userData);
+  localStorage.setItem('user', JSON.stringify(userData));
+  localStorage.setItem('accessToken', accessToken);
+  localStorage.setItem('refreshToken', refreshToken);
+};
+
 
   const logout = () => {
     setUser(null);
