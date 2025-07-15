@@ -26,7 +26,7 @@ env\Scripts\activate           # Za Windows
 
 -->Instalirati requirements<--
 
-pip install Django djangorestframework djangorestframework-simplejwt reportlab pytz
+pip install Django djangorestframework djangorestframework-simplejwt reportlab pytz django-cors-headers
 
 -->Pokreni migracije<--
 python manage.py migrate
