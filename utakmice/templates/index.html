@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,20 +9,22 @@
 </head>
 <body>
     <h1>Kkartizan</h1>
-    
+
     <div class="korisnik"> 
-        {% if request.user.username %}   
-        <h2>Korisnik: {{ request.user.username }}</h2>
+        {% if request.user.is_authenticated %}   
+            <h2>Korisnik: {{ request.user.username }}</h2>
 
-        <form action="{% url 'logout' %}" method="post" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="sort-buttons" style="font-size:1.5em"> Logout </button>
-        </form>
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="sort-buttons" style="font-size:1.5em">Logout</button>
+            </form>
 
-        <form action="{% url 'kupljene' %}" method="post" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="sort-buttons" style="font-size:1.5em"> Kupljene karte </button>
-        </form>
+            <form action="{% url 'kupljene' %}" method="get" style="display: inline;">
+                <button type="submit" class="sort-buttons" style="font-size:1.5em">Kupljene karte</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login_form' %}" class="sort-buttons" style="font-size:1.5em">Login</a> |
+            <a href="{% url 'register_form' %}" class="sort-buttons" style="font-size:1.5em">Register</a>
         {% endif %}
     </div>
 
@@ -41,10 +42,10 @@
                 <span>Partizan VS {{ t.protivnik }}</span>
                 <span class="date">{{ t.datumVreme|date:"d.m.Y. H:i" }}</span>
             </div>
-            <form action="{% url "buypage" %}" method="get">
+            <form action="{% url 'buypage' %}" method="get">
                 <input type="hidden" name="id" value="{{ t.id }}">
                 <button type="submit">Kupi karte</button>
-            </form>
+            </form>                
         </li>
         {% endfor %}
     </ul>

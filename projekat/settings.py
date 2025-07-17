@@ -75,6 +75,7 @@ REST_FRAMEWORK = {
 }
 
 ROOT_URLCONF = "projekat.urls"
+LOGIN_URL = '/api/auth/login/'
 
 TEMPLATES = [
     {

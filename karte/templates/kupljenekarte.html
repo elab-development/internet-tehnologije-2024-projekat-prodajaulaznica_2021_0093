@@ -11,7 +11,7 @@
     <ul>
         <h2>Kupljene karte</h2>
         <h2>Korisnik: {{ request.user.username }}</h2>
-        {% for kk in kupljene %}
+        {% for kk in karte %}
         <li>
             <span>{{ kk.tip_karte }}</span>
             <span>{{ kk.utakmica }}</span>
@@ -20,6 +20,8 @@
                 <button type="submit">Preuzmi kartu</button>
             </form>
         </li>
+        {% empty %}
+        <li>Nemate kupljenih karata.</li>
         {% endfor %}
     </ul>
 </body>

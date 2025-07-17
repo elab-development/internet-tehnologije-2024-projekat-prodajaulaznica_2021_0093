@@ -1,10 +1,13 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
+from django.contrib.auth.models import User
+from django.shortcuts import redirect
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
-from django.contrib.auth.models import User
-
+from django.contrib.auth import login
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
 
 class LoginView(APIView):
     def post(self, request):
@@ -41,3 +44,19 @@ class LogoutView(APIView):
             )
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("pocetna")  
+def login_form_view(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("pocetna")
+        else:
+            return render(request, "login.html", {"error": "Pogrešan username ili lozinka"})
+    return render(request, "login.html")

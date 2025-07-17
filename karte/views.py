@@ -1,17 +1,19 @@
-from rest_framework import viewsets
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from django.contrib.auth.models import User
+# karte/views.py
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from rest_framework import viewsets, status
+from django.contrib.auth.models import User
 from reportlab.pdfgen import canvas
 from .models import TipKarte, Karte, PreostaloKarata
 from utakmice.models import Utakmica
 from .serializers import TipKarteSerializer, KarteSerializer, PreostaloKarataSerializer
-from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken
 
+# --- API VIEWSETOVI ---
 class TipKarteViewSet(viewsets.ModelViewSet):
     queryset = TipKarte.objects.all()
     serializer_class = TipKarteSerializer
@@ -24,8 +26,17 @@ class PreostaloKarataViewSet(viewsets.ModelViewSet):
     queryset = PreostaloKarata.objects.all()
     serializer_class = PreostaloKarataSerializer
 
+# --- OBICAN VIEW ZA TEMPLATE ---
+
+@login_required
+def kupljene_karte(zahtev):
+    kupljene = Karte.objects.filter(kupac=zahtev.user)
+    return render(zahtev, 'kupljenekarte.html', {'kupljene': kupljene})
+
+
+# --- API ENDPOINTI ---
 @api_view(['GET'])
-@permission_classes([AllowAny])  # Omogućen javni pristup bez autentifikacije
+@permission_classes([AllowAny])
 def kupovina_api(request, utakmica_id):
     try:
         utakmica = Utakmica.objects.get(id=utakmica_id)
@@ -69,7 +80,6 @@ def register_user(request):
             'access': str(refresh.access_token),
             'refresh': str(refresh)
         }, status=201)
-
     except Exception as e:
         return Response({'error': str(e)}, status=500)
 
@@ -100,7 +110,6 @@ def kupi_karte_api(request):
             return Response({'message': 'Kupovina uspesna'})
         else:
             return Response({'error': 'Nema dovoljno karata'}, status=400)
-
     except Exception as e:
         return Response({'error': str(e)}, status=500)
 
@@ -108,24 +117,15 @@ def kupi_karte_api(request):
 @permission_classes([IsAuthenticated])
 def moje_karte(request):
     karte = Karte.objects.filter(kupac=request.user)
-    data = [
-        {
-            'id': karta.id,
-            'tip_karte': karta.tip_karte.naziv,
-            'utakmica': f"Partizan VS {karta.utakmica.protivnik} - {karta.utakmica.datumVreme.strftime('%d.%m.%Y %H:%M')}",
-            'cena': float(karta.cena)
-        } for karta in karte
-    ]
-    return Response(data)
+    serializer = KarteSerializer(karte, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def preuzmi_kartu_pdf(request, karta_id):
     karta = get_object_or_404(Karte, id=karta_id, kupac=request.user)
-
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="karta_{karta.id}.pdf"'
-
     p = canvas.Canvas(response)
     p.drawString(100, 750, "Karta")
     p.drawString(100, 730, f"Tip karte: {karta.tip_karte}")
@@ -135,9 +135,8 @@ def preuzmi_kartu_pdf(request, karta_id):
     p.save()
     return response
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def moje_karte(request):
+@login_required
+def kupljene_karte_view(request):
     karte = Karte.objects.filter(kupac=request.user)
-    serializer = KarteSerializer(karte, many=True)
-    return Response(serializer.data)
+    return render(request, "kupljenekarte.html", {"karte": karte})
+
