@@ -21,10 +21,6 @@ urlpatterns = [
     path("moje-karte/", views.moje_karte, name="moje_karte"),
     path("karte/preuzmi/<int:karta_id>/", views.preuzmi_kartu_pdf, name="preuzmi_kartu_pdf"),
     path("kupljene/", kupljene_karte_view, name="kupljene"),
-   # path("export/<int:id>/", export_pdf, name="export"),
-    #path('export-pdf/<int:karta_id>/', views.karta_u_pdf, name='export'),
     path('export-pdf/<int:karta_id>/', preuzmi_kartu_pdf, name='export'),
 
-    # Klasičan Django view za template (ne API)
-   # path("kupljene/", views.kupljene_karte, name="kupljene"),
 ]
