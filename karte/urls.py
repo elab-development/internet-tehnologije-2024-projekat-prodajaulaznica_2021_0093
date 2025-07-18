@@ -14,7 +14,6 @@ router.register(r"preostalo", views.PreostaloKarataViewSet, basename="preostalo"
 urlpatterns = [
     path("", include(router.urls)),
     
-    # Custom API rute
     path("kupovina/<int:utakmica_id>/", views.kupovina_api, name="kupovina_api"),
     path("kupovina/kupi/", views.kupi_karte_api, name="kupi_karte_api"),
     path("register/", views.register_user, name="register_user"),
@@ -22,5 +21,4 @@ urlpatterns = [
     path("karte/preuzmi/<int:karta_id>/", views.preuzmi_kartu_pdf, name="preuzmi_kartu_pdf"),
     path("kupljene/", kupljene_karte_view, name="kupljene"),
     path('export-pdf/<int:karta_id>/', preuzmi_kartu_pdf, name='export'),
-
 ]

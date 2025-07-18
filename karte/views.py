@@ -1,4 +1,3 @@
-# karte/views.py
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -7,13 +6,18 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.exceptions import AuthenticationFailed
 from reportlab.pdfgen import canvas
+
 from .models import TipKarte, Karte, PreostaloKarata
 from utakmice.models import Utakmica
 from .serializers import TipKarteSerializer, KarteSerializer, PreostaloKarataSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
 
-# --- API VIEWSETOVI ---
+
+# ----------------------- ViewSet-ovi -----------------------
+
 class TipKarteViewSet(viewsets.ModelViewSet):
     queryset = TipKarte.objects.all()
     serializer_class = TipKarteSerializer
@@ -26,15 +30,49 @@ class PreostaloKarataViewSet(viewsets.ModelViewSet):
     queryset = PreostaloKarata.objects.all()
     serializer_class = PreostaloKarataSerializer
 
-# --- OBICAN VIEW ZA TEMPLATE ---
+
+# ----------------------- Klasični Django views -----------------------
 
 @login_required
-def kupljene_karte(zahtev):
-    kupljene = Karte.objects.filter(kupac=zahtev.user)
-    return render(zahtev, 'kupljenekarte.html', {'kupljene': kupljene})
+def kupljene_karte_view(request):
+    karte = Karte.objects.filter(kupac=request.user)
+    return render(request, "kupljenekarte.html", {"karte": karte})
 
 
-# --- API ENDPOINTI ---
+def preuzmi_kartu_pdf(request, karta_id):
+    user = None
+
+    if request.user.is_authenticated:
+        user = request.user
+    else:
+        jwt_auth = JWTAuthentication()
+        try:
+            user_auth = jwt_auth.authenticate(request)
+            if user_auth is not None:
+                user, _ = user_auth
+            else:
+                return HttpResponse("Unauthorized", status=401)
+        except Exception as e:
+            return HttpResponse(f"Auth error: {e}", status=401)
+
+    karta = get_object_or_404(Karte, id=karta_id, kupac=user)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="karta_{karta.id}.pdf"'
+
+    p = canvas.Canvas(response)
+    p.drawString(100, 750, "Karta")
+    p.drawString(100, 730, f"Tip karte: {karta.tip_karte}")
+    p.drawString(100, 710, f"Cena: {karta.cena} RSD")
+    p.drawString(100, 690, f"Kupac: {user.username}")
+    p.drawString(100, 670, f"Utakmica: {karta.utakmica}")
+    p.save()
+
+    return response
+
+
+# ----------------------- API views -----------------------
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def kupovina_api(request, utakmica_id):
@@ -60,6 +98,7 @@ def kupovina_api(request, utakmica_id):
     except Exception as e:
         return Response({'error': str(e)}, status=500)
 
+
 @api_view(['POST'])
 def register_user(request):
     try:
@@ -82,6 +121,7 @@ def register_user(request):
         }, status=201)
     except Exception as e:
         return Response({'error': str(e)}, status=500)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -113,6 +153,7 @@ def kupi_karte_api(request):
     except Exception as e:
         return Response({'error': str(e)}, status=500)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def moje_karte(request):
@@ -120,12 +161,15 @@ def moje_karte(request):
     serializer = KarteSerializer(karte, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def preuzmi_kartu_pdf(request, karta_id):
+def preuzmi_kartu_pdf_api(request, karta_id):
     karta = get_object_or_404(Karte, id=karta_id, kupac=request.user)
+
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="karta_{karta.id}.pdf"'
+
     p = canvas.Canvas(response)
     p.drawString(100, 750, "Karta")
     p.drawString(100, 730, f"Tip karte: {karta.tip_karte}")
@@ -133,10 +177,5 @@ def preuzmi_kartu_pdf(request, karta_id):
     p.drawString(100, 690, f"Kupac: {request.user.username}")
     p.drawString(100, 670, f"Utakmica: {karta.utakmica}")
     p.save()
+
     return response
-
-@login_required
-def kupljene_karte_view(request):
-    karte = Karte.objects.filter(kupac=request.user)
-    return render(request, "kupljenekarte.html", {"karte": karte})
-

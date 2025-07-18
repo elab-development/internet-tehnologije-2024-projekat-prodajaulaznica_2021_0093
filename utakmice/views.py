@@ -19,7 +19,7 @@ def pocetna(request):
         tekme = Utakmica.objects.all()
     return render(request, "index.html", {"tekme": tekme})
 
-@login_required(login_url='/login/')  # ← garantuje redirekciju ako nije ulogovan
+@login_required(login_url='/login/') 
 def buypage_view(request):
     utakmica_id = request.GET.get("id")
     utakmica = get_object_or_404(Utakmica, id=utakmica_id)

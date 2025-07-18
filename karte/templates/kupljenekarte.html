@@ -16,9 +16,11 @@
             <span>{{ kk.tip_karte }}</span>
             <span>{{ kk.utakmica }}</span>
             <span>{{ kk.cena }} RSD</span>
-            <form action="{% url 'export' kk.id %}" method="get" style="display:inline;">
-                <button type="submit">Preuzmi kartu</button>
-            </form>
+            <a href="{% url 'preuzmi_kartu_pdf' kk.id %}" download>
+    <button type="button">Preuzmi kartu</button>
+</a>
+
+
         </li>
         {% empty %}
         <li>Nemate kupljenih karata.</li>
