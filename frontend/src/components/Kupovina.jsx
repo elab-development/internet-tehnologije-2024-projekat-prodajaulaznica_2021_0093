@@ -37,11 +37,13 @@ const Kupovina = () => {
         broj_karata: parseInt(brojKarata),
       });
 
-      alert("Kupovina uspešna!");
-      navigate('/');
+      //alert("Kupovina uspešna!");
+      navigate('/success');
     } catch (error) {
       console.error("Greška pri kupovini:", error);
-      alert("Greška pri kupovini. Proverite da li ste prijavljeni.");
+      //alert("Greška pri kupovini.");
+        navigate("/error");
+
     }
   };
 

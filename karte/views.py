@@ -16,7 +16,6 @@ from utakmice.models import Utakmica
 from .serializers import TipKarteSerializer, KarteSerializer, PreostaloKarataSerializer
 
 
-# ----------------------- ViewSet-ovi -----------------------
 
 class TipKarteViewSet(viewsets.ModelViewSet):
     queryset = TipKarte.objects.all()
@@ -31,7 +30,6 @@ class PreostaloKarataViewSet(viewsets.ModelViewSet):
     serializer_class = PreostaloKarataSerializer
 
 
-# ----------------------- Klasični Django views -----------------------
 
 @login_required
 def kupljene_karte_view(request):
@@ -71,7 +69,6 @@ def preuzmi_kartu_pdf(request, karta_id):
     return response
 
 
-# ----------------------- API views -----------------------
 
 @api_view(['GET'])
 @permission_classes([AllowAny])

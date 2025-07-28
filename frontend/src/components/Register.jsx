@@ -39,7 +39,6 @@ const Register = () => {
       const accessToken = response.data.access;
       const refreshToken = response.data.refresh;
 
-      // ✅ Poziv login sa sva 3 parametra
       login(userData, accessToken, refreshToken);
 
       navigate('/');
