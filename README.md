@@ -6,14 +6,14 @@ Full-stack web aplikacija za online prodaju ulaznica za utakmice košarkaškog k
 
 ## ⚙️ Kako pokrenuti projekat lokalno
 
+```bash
 
 1. Kloniraj repozitorijum
-
-```bash
-git clone https://github.com/korisnicko-ime/ime-repozitorijuma.git
-cd ime-repozitorijuma
+git clone https://github.com/elab-development/internet-tehnologije-2024-projekat-prodajaulaznica_2021_0093.git
+cd internet-tehnologije-2024-projekat-prodajaulaznica_2021_0093
 
 python -m venv env
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 source env/bin/activate        # Za Linux/macOS
 env\Scripts\activate           # Za Windows
 
